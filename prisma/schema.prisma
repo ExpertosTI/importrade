@@ -1,0 +1,154 @@
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          Role      @default(INDIVIDUAL)
+  
+  // Profile fields
+  companyName   String?
+  rnc           String?   // Tax ID for PYME
+  phoneNumber   String?
+  address       String?
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  requests      ProductRequest[]
+  orders        Order[]
+  messages      Message[]
+}
+
+enum Role {
+  INDIVIDUAL
+  PYME
+  ADMIN
+}
+
+model ProductRequest {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  
+  productName String
+  category    String?
+  description String
+  quantity    Int
+  quality     String?   // Basic, Standard, Premium
+  budget      Decimal?
+  
+  status      RequestStatus @default(PENDING)
+  
+  images      String[]  // URLs to images/files
+  referenceLinks String[]
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  quotes      Quote[]
+  messages    Message[]
+}
+
+enum RequestStatus {
+  PENDING
+  IN_REVIEW
+  QUOTED
+  APPROVED
+  REJECTED
+}
+
+model Quote {
+  id              String         @id @default(cuid())
+  requestId       String
+  request         ProductRequest @relation(fields: [requestId], references: [id])
+  
+  productName     String
+  unitPrice       Decimal
+  minOrderQuantity Int
+  totalProductCost Decimal
+  
+  shippingCost    Decimal?
+  insuranceCost   Decimal?
+  customsFees     Decimal? // Estimated
+  serviceFee      Decimal?
+  
+  totalEstimatedCost Decimal
+  
+  currency        String         @default("USD")
+  
+  supplierName    String?
+  notes           String?
+  validUntil      DateTime?
+  
+  isSelected      Boolean        @default(false)
+  
+  createdAt       DateTime       @default(now())
+}
+
+model Order {
+  id              String         @id @default(cuid())
+  userId          String
+  user            User           @relation(fields: [userId], references: [id])
+  
+  quoteId         String?        // Link to quote if applicable
+  
+  details         String         // JSON or text description
+  totalAmount     Decimal
+  status          OrderStatus    @default(CONFIRMED)
+  
+  trackingNumber  String?
+  
+  documents       Document[]
+  
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+}
+
+enum OrderStatus {
+  CONFIRMED
+  PURCHASED_CHINA
+  WAREHOUSE_CHINA
+  IN_TRANSIT
+  CUSTOMS_RD
+  RELEASED
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+}
+
+model Message {
+  id              String         @id @default(cuid())
+  content         String
+  senderId        String
+  sender          User           @relation(fields: [senderId], references: [id])
+  
+  requestId       String?
+  request         ProductRequest? @relation(fields: [requestId], references: [id])
+  
+  createdAt       DateTime       @default(now())
+}
+
+model Document {
+  id        String   @id @default(cuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id])
+  
+  name      String
+  url       String
+  type      String   // INVOICE, BL, CUSTOMS, ETC
+  
+  createdAt DateTime @default(now())
+}

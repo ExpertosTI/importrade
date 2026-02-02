@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  app:
+    container_name: importrade-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/importrade?schema=public
+      - NEXTAUTH_URL=http://localhost:3000
+      - NEXTAUTH_SECRET=supersecretchangeinprod
+    depends_on:
+      - db
+    networks:
+      - importrade-network
+
+  db:
+    container_name: importrade-db
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: importrade
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - importrade-network
+
+networks:
+  importrade-network:
+    driver: bridge
+
+volumes:
+  db-data:
