@@ -43,9 +43,48 @@ function LoginContent() {
         }
     }
 
-    const handleGoogleLogin = () => {
+    const handleGoogleLogin = async () => {
         setIsLoading(true)
-        signIn("google", { callbackUrl: "/dashboard" })
+        
+        // Abrir popup para OAuth
+        const width = 500
+        const height = 600
+        const left = (window.screen.width - width) / 2
+        const top = (window.screen.height - height) / 2
+        
+        const popup = window.open(
+            `/api/auth/signin/google?callbackUrl=${encodeURIComponent(window.location.origin + "/dashboard")}`,
+            "google-auth",
+            `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes,status=yes`
+        )
+        
+        if (!popup) {
+            setIsLoading(false)
+            alert("Por favor permite los popups para iniciar sesión con Google")
+            return
+        }
+        
+        // Escuchar mensajes del popup
+        const checkClosed = setInterval(() => {
+            if (popup.closed) {
+                clearInterval(checkClosed)
+                setIsLoading(false)
+                // Recargar para verificar si se autenticó
+                window.location.reload()
+            }
+        }, 1000)
+        
+        // Escuchar mensaje de éxito
+        const messageHandler = (event: MessageEvent) => {
+            if (event.data === "google-auth-success") {
+                clearInterval(checkClosed)
+                popup.close()
+                window.removeEventListener("message", messageHandler)
+                router.push("/dashboard")
+            }
+        }
+        
+        window.addEventListener("message", messageHandler)
     }
 
     return (
