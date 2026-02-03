@@ -18,10 +18,10 @@ export function LogoGlow({ size = "md", withGlow = true, className }: LogoGlowPr
   }, []);
 
   const sizeClasses = {
-    sm: "h-8 w-8",
-    md: "h-12 w-12",
-    lg: "h-16 w-16",
-    xl: "h-24 w-24",
+    sm: "h-8 w-auto",
+    md: "h-12 w-auto",
+    lg: "h-16 w-auto",
+    xl: "h-32 w-auto",
   };
 
   const glowSizeClasses = {
@@ -35,9 +35,9 @@ export function LogoGlow({ size = "md", withGlow = true, className }: LogoGlowPr
     <div className={cn("relative", className)}>
       <Image
         src="/logo.svg"
-        alt="Renace"
-        width={mounted ? parseInt(sizeClasses[size].split(" ")[1].replace("w-", "")) * 16 : 0}
-        height={mounted ? parseInt(sizeClasses[size].split(" ")[0].replace("h-", "")) * 16 : 0}
+        alt="ImporTrade"
+        width={200}
+        height={mounted ? parseInt(sizeClasses[size].split(" ")[0].replace("h-", "")) * 4 : 0}
         className={cn(
           "transition-all duration-700 ease-out",
           sizeClasses[size],
