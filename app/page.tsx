@@ -4,6 +4,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Container, Ship, ShieldCheck, TrendingDown, Package, Globe } from "lucide-react"
 import { APP_CONFIG } from "@/lib/config"
+import { LogoGlow } from "@/components/brand"
 
 export default function Home() {
   return (
@@ -14,14 +15,10 @@ export default function Home() {
         <div className="container mx-auto px-6 h-20 flex justify-between items-center">
           <div className="flex items-center space-x-2">
             <Link href="/" className="flex items-center gap-2">
-              <Image
-                src="/logo.svg"
-                alt="Renace Logo"
-                width={160}
-                height={45}
-                className="h-10 w-auto cursor-pointer"
-                priority
-              />
+              <LogoGlow size="md" withGlow={true} />
+              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                {APP_CONFIG.name}
+              </span>
             </Link>
           </div>
 

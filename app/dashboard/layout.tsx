@@ -17,6 +17,7 @@ import {
     Wrench
 } from "lucide-react"
 import { APP_CONFIG } from "@/lib/config"
+import { LogoGlow } from "@/components/brand"
 
 export default async function DashboardLayout({
     children,
@@ -43,14 +44,10 @@ export default async function DashboardLayout({
                 {/* Mobile Header */}
                 <div className="md:hidden bg-slate-900 border-b border-slate-800 p-4 flex items-center justify-between sticky top-0 z-50">
                     <div className="flex items-center space-x-2">
-                        <Image
-                            src="/logo.svg"
-                            alt="Logo"
-                            width={32}
-                            height={32}
-                            className="w-8 h-8 rounded-lg"
-                        />
-                        <span className="font-bold text-lg">{APP_CONFIG.name}</span>
+                        <LogoGlow size="sm" withGlow={true} />
+                        <span className="text-lg font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+                            {APP_CONFIG.name}
+                        </span>
                     </div>
                     <Link href="/dashboard/profile">
                         <UserCircle className="w-6 h-6 text-slate-400" />
@@ -61,14 +58,8 @@ export default async function DashboardLayout({
                 <aside className="hidden md:flex flex-col w-64 bg-slate-900 border-r border-slate-800 h-screen sticky top-0">
                     <div className="p-6 flex items-center space-x-3">
                         <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-                            <Image
-                                src="/logo.svg"
-                                alt="Logo"
-                                width={40}
-                                height={40}
-                                className="w-10 h-10"
-                            />
-                            <span className="font-bold text-xl tracking-tight text-white">{APP_CONFIG.name}</span>
+                            <LogoGlow size="md" withGlow={true} />
+                            <span className="font-bold text-xl tracking-tight bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">{APP_CONFIG.name}</span>
                         </Link>
                     </div>
 

@@ -1,0 +1,43 @@
+{
+  "name": "Renace - Logística Inteligente",
+  "short_name": "Renace",
+  "description": "Tu puerta a las importaciones de China. Gestionamos compras, aduanas y transporte.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "es-DO",
+  "categories": ["business", "productivity", "finance"],
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Calculadora",
+      "short_name": "Calcular",
+      "description": "Calcular costos de importación",
+      "url": "/dashboard/calculator",
+      "icons": [{ "src": "/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Solicitar Producto",
+      "short_name": "Solicitar",
+      "description": "Nueva solicitud de importación",
+      "url": "/dashboard/requests",
+      "icons": [{ "src": "/icon-192x192.png", "sizes": "192x192" }]
+    }
+  ]
+}
