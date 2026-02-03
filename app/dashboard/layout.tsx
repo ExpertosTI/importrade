@@ -42,13 +42,10 @@ export default async function DashboardLayout({
         <OnboardingGuard isProfileComplete={isProfileComplete}>
             <div className="min-h-screen bg-slate-950 text-white flex flex-col md:flex-row">
                 {/* Mobile Header */}
-                <div className="md:hidden bg-slate-900 border-b border-slate-800 p-4 flex items-center justify-between sticky top-0 z-50">
-                    <div className="flex items-center space-x-2">
-                        <LogoGlow size="sm" withGlow={true} />
-                        <span className="text-lg font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
-                            {APP_CONFIG.name}
-                        </span>
-                    </div>
+                <div className="md:hidden bg-slate-900 border-b border-slate-800 p-3 flex items-center justify-between sticky top-0 z-50">
+                    <Link href="/dashboard" className="flex items-center">
+                        <LogoGlow size="sm" withGlow={false} />
+                    </Link>
                     <Link href="/dashboard/profile">
                         <UserCircle className="w-6 h-6 text-slate-400" />
                     </Link>
