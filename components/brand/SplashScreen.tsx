@@ -40,7 +40,7 @@ export function SplashScreen({ onFinish, minDuration = 2000 }: SplashScreenProps
             mounted ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0"
           }`}
         >
-          Renace
+          ImporTrade
         </h1>
         
         <p

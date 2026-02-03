@@ -5,7 +5,7 @@
 
 export const APP_CONFIG = {
   // Branding
-  name: "Renace",
+  name: "ImporTrade",
   tagline: "Logística Inteligente",
   description: "Tu puerta a las importaciones de China. Gestionamos compras, aduanas y transporte.",
   

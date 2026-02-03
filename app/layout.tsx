@@ -32,9 +32,9 @@ export const metadata: Metadata = {
     "envíos marítimos",
     "agencia de aduanas"
   ],
-  authors: [{ name: "Renace Logistics", url: "https://renace.do" }],
-  creator: "Renace Logistics",
-  publisher: "Renace Logistics",
+  authors: [{ name: "ImporTrade by Renace Logistics", url: "https://renace.do" }],
+  creator: "ImporTrade",
+  publisher: "ImporTrade",
   robots: {
     index: true,
     follow: true,

@@ -52,11 +52,11 @@ function LoginContent() {
         <Card className="w-full max-w-md border-slate-200 bg-white shadow-xl relative z-10">
             <CardHeader className="text-center space-y-2">
                 {/* LOGO */}
-                <div className="mx-auto flex items-center justify-center mb-4">
-                    <Link href="/">
+                <div className="flex justify-center mb-4">
+                    <Link href="/" className="flex items-center justify-center">
                         <Image
                             src="/logo.svg"
-                            alt="Renace Logo"
+                            alt="ImporTrade Logo"
                             width={180}
                             height={60}
                             className="h-16 w-auto cursor-pointer"
