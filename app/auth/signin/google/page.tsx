@@ -1,5 +1,7 @@
 "use client"
 
+export const dynamic = 'force-static'
+
 import { useEffect } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { signIn, getSession } from "next-auth/react"

@@ -1,4 +1,3 @@
-
 "use client"
 
 import Link from "next/link"
@@ -46,15 +45,23 @@ function LoginContent() {
     const handleGoogleLogin = async () => {
         setIsLoading(true)
         
-        // Abrir popup para OAuth
+        // Abrir popup con la URL de autorización de Google
         const width = 500
         const height = 600
         const left = (window.screen.width - width) / 2
         const top = (window.screen.height - height) / 2
         
+        // Crear URL de autorización de Google OAuth
+        const clientId = "609647959676-hahvh0d3ofufnu0b7mopdfb1mivv6qfh.apps.googleusercontent.com"
+        const redirectUri = encodeURIComponent(`${window.location.origin}/api/auth/callback/google`)
+        const scope = encodeURIComponent("openid email profile")
+        const state = encodeURIComponent(JSON.stringify({ callbackUrl: "/dashboard", csrfToken: Date.now() }))
+        
+        const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&state=${state}&access_type=offline&prompt=consent`
+        
         const popup = window.open(
-            `/api/auth/signin/google?callbackUrl=${encodeURIComponent(window.location.origin + "/dashboard")}`,
-            "google-auth",
+            authUrl,
+            "google-oauth",
             `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes,status=yes`
         )
         
@@ -64,27 +71,15 @@ function LoginContent() {
             return
         }
         
-        // Escuchar mensajes del popup
+        // Monitorear cuando el popup se cierra
         const checkClosed = setInterval(() => {
             if (popup.closed) {
                 clearInterval(checkClosed)
                 setIsLoading(false)
-                // Recargar para verificar si se autenticó
+                // Verificar si se autenticó recargando la página
                 window.location.reload()
             }
-        }, 1000)
-        
-        // Escuchar mensaje de éxito
-        const messageHandler = (event: MessageEvent) => {
-            if (event.data === "google-auth-success") {
-                clearInterval(checkClosed)
-                popup.close()
-                window.removeEventListener("message", messageHandler)
-                router.push("/dashboard")
-            }
-        }
-        
-        window.addEventListener("message", messageHandler)
+        }, 500)
     }
 
     return (
